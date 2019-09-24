@@ -36,4 +36,4 @@ class PSO(object):
             search_space.move_particles(W=self.W, c1=self.c1, c2=self.c2)
             iteration += 1
 
-        return search_space.gbest_value
+        return search_space.gbest_position
