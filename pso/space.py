@@ -1,34 +1,35 @@
 import random
 import numpy as np
-from pid.abstract_pid import AbstractPID
+from pso.abstract_function_optimization import AbstractFunctionOptimization
 
 
-class Space():
-    def __init__(self, target: float, target_error: float, n_particles: float, pid:AbstractPID):
-        self.pid = pid
+class Space(object):
+    def __init__(self, target: float, target_error: float, n_particles: float, function_optimization: AbstractFunctionOptimization):
+        self.function_optimization = function_optimization
         self.target = target
         self.target_error = target_error
         self.n_particles = n_particles
         self.particles = []
         self.gbest_value = float('inf')
-
         lim_min = 0
         lim_max = 5
         self.gbest_position = np.array([random.uniform(lim_min, lim_max)
                                 , random.uniform(lim_min, lim_max)
                                 , random.uniform(lim_min, lim_max)])
+        # self.gbest_position = np.array([[random.uniform(self.function_optimization.lim_min, self.function_optimization.lim_max)] for _ in range(self.function_optimization.number_of_inputs)])
+
 
     def print_particles(self):
         for particle in self.particles:
             particle.__str__()
 
     def fitness(self, particle) -> float:
-        return self.pid.get_fitness_pid(particle.position[0], particle.position[1], particle.position[2])
+        return self.function_optimization.get_function_fitness(particle.position)
 
     def set_pbest(self):
         for particle in self.particles:
             fitness_cadidate = self.fitness(particle)
-            if (particle.pbest_value > fitness_cadidate):
+            if particle.pbest_value > fitness_cadidate:
                 particle.pbest_value = fitness_cadidate
                 particle.pbest_position = particle.position
 

@@ -1,4 +1,8 @@
 from pso.run import PSO
+from pid.example_imp_pid import ExampleOnePID
+
+# Initialize PID
+pid = ExampleOnePID()
 
 # Initialize PSI
 pso = PSO(
@@ -12,6 +16,6 @@ pso = PSO(
     )
 
 # Get tuning value
-pid_tuning = pso.run()
-print("The best value for tuning PID is: %s" %pid_tuning)
+pid_tuning = pso.run(function_optimization=pid)
+print("The best value for tuning PID is: %s" % pid_tuning)
 

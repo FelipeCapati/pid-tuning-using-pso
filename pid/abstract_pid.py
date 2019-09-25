@@ -2,17 +2,20 @@ import abc
 from scipy import signal
 import sympy as sy
 import utility.lti as lti
+from pso.abstract_function_optimization import AbstractFunctionOptimization
+
 
 class IndicatorPID(object):
     def __init__(self, overpoint:float, time_to_setpoint:float):
         self.overpoint = overpoint
         self.time_to_setpoint = time_to_setpoint
 
-class AbstractPID(object):
+
+class AbstractPID(AbstractFunctionOptimization):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self):
-        pass
+    def __init__(self, number_of_inputs: int, lim_min: int, lim_max: int):
+        super(AbstractPID, self).__init__(number_of_inputs=number_of_inputs, lim_min=lim_min, lim_max=lim_max)
 
     @abc.abstractmethod
     def get_plant_transfer_function(self) -> signal.lti:
