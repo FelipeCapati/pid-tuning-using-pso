@@ -3,7 +3,7 @@ from pid.example_imp_pid import ExampleOnePID
 
 # Initialize PID
 pid = ExampleOnePID()
-
+pid.get_lti_by_pid()
 # Initialize PSI
 pso = PSO(
         W=0.5
